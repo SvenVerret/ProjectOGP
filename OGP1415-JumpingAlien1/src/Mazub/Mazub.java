@@ -2,8 +2,6 @@ package Mazub;
 import be.kuleuven.cs.som.annotate.*;
 
 public class Mazub {
-
-
 	
 	public Mazub(int posx, int posy, int height, int width, double maxvelx, double initvelx, double dt) throws OutOfBoundsException {
 		if (posx > 1023){
@@ -88,14 +86,6 @@ public class Mazub {
 	public boolean isValidPosY(int posy){
 		return ((posy >=0) && (posy <= 767));
 	}
-	
-	
-	//isValidHeight
-	//isValidWidth
-	
-	////////////////////////////////////////////////////////////////////////////////////////
-	
-
 	
 	public void startMove(boolean direction){
 		if (direction == true){
@@ -240,6 +230,7 @@ public class Mazub {
 	public void setVelocityX(double velocityX) {
 		VelocityX = velocityX;
 	}
+	
 	@Basic
 	public double getVelocityY() {
 		return VelocityY;
@@ -280,7 +271,7 @@ public class Mazub {
 	
 	private double VelocityX;
 	private final double InitVelocityX;
-	private double MaxVelocityX;
+	private final double MaxVelocityX;
 	
 	private double VelocityY;
 	private static final double INITVELOCITYY = 8.0;
