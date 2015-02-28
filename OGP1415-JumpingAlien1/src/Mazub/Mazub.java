@@ -149,7 +149,17 @@ public class Mazub {
 			this.setVelocityY(0.0);
 		}
 	}
-
+	
+	public void startDuck(){
+		setMaxVelocityX(1.0);
+	}
+	
+	public void endDuck(){
+		setMaxVelocityX(3.0);
+	}
+	
+	
+	
 	public void advanceTime(){
 
 		boolean direction = this.getOrientation();
@@ -270,7 +280,7 @@ public class Mazub {
 	
 	private double VelocityX;
 	private final double InitVelocityX;
-	private final double MaxVelocityX;
+	private double MaxVelocityX;
 	
 	private double VelocityY;
 	private static final double INITVELOCITYY = 8.0;
