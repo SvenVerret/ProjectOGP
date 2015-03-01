@@ -19,12 +19,15 @@ public class Mazub {
 			this.setPosY(posy);
 		}
 		
-		// TODO eventueel wrongdimensionexc
-		this.Height= height;
-		this.Width= width;
+		this.StandingHeight = height;
+		this.setHeight(height);
+		this.setWidth(width);
+		
+		
 		
 		if ((maxvelx >= initvelx) && (initvelx >= 1.0)){
 			this.MaxVelocityX= maxvelx;
+			this.setMaxVelocityXCurr(maxvelx);
 			this.InitVelocityX= initvelx;
 		} else{
 			throw new IllegalArgumentException();
@@ -66,19 +69,32 @@ public class Mazub {
 		}
 	}
 	
-	@Basic @Immutable
+	@Basic
 	public int getHeight() {
 		return Height;
 	}
-	@Basic @Immutable
+	public void setHeight(int height) {
+		this.Height= height;
+	}
+	
+	@Basic
 	public int getWidth() {
 		return Width;
 	}
+	public void setWidth(int width) {
+		this.Width= width;
+	}
+	@Basic @Immutable
+	public int getStandingHeight() {
+		return StandingHeight;
+	}
+
 	
 	private int PosX;
 	private int PosY;
-	private final int Height;
-	private final int Width;
+	private int Height;
+	private int Width;
+	private final int StandingHeight;
 	
 	public boolean isValidPosX(int posx){
 		return ((posx >=0) && (posx <= 1023));
@@ -98,7 +114,7 @@ public class Mazub {
 			
 		double dt= this.getDeltaT();
 		
-		while (Math.abs(this.getVelocityX()) < MaxVelocityX ){
+		while (Math.abs(this.getVelocityX()) < this.getMaxVelocityXCurr() ){
 			if (direction == true){
 				this.setVelocityX( this.getVelocityX() + this.getAccXFwd() * dt );
 			} else{
@@ -140,15 +156,18 @@ public class Mazub {
 		}
 	}
 	
+	
+	//TODO defensive?
 	public void startDuck(){
-		setMaxVelocityX(1.0);
+		this.setHeight(this.getStandingHeight()/2);
+		this.setMaxVelocityXCurr(1.0);
 	}
 	
 	public void endDuck(){
-		setMaxVelocityX(3.0);
+		this.setHeight(this.getStandingHeight());
+		this.setMaxVelocityXCurr(getMaxVelocityX());
 	}
-	
-	
+
 	
 	public void advanceTime(){
 
@@ -173,7 +192,11 @@ public class Mazub {
 			else{
 				throw new OutOfBoundsException(posx + s);
 			}
-			this.setVelocityX( velx + accx * dt );
+			
+			if (velx < this.getMaxVelocityXCurr()){
+				this.setVelocityX( velx + accx * dt );
+			}
+			
 			
 		} else{
 
@@ -189,7 +212,10 @@ public class Mazub {
 			else{
 				throw new OutOfBoundsException(posx + s);
 			}
-			this.setVelocityX( velx - accx * dt );
+			
+			if (velx < this.getMaxVelocityXCurr()){
+				this.setVelocityX( velx - accx * dt );
+			}
 		}
 		
 		
@@ -243,6 +269,21 @@ public class Mazub {
 	public double getInitVelocityX() {
 		return InitVelocityX;
 	}
+	
+	@Basic @Immutable
+	public double getMaxVelocityX() {
+		return MaxVelocityX;
+	}
+	
+	@Basic
+	public double getMaxVelocityXCurr() {
+		return MaxVelocityXCurr;
+	}
+
+	public void setMaxVelocityXCurr(double maxVelocityXCurr) {
+		MaxVelocityXCurr = maxVelocityXCurr;
+	}
+
 
 	@Basic
 	public double getAccXFwd() {
@@ -272,6 +313,7 @@ public class Mazub {
 	private double VelocityX;
 	private final double InitVelocityX;
 	private final double MaxVelocityX;
+	private double MaxVelocityXCurr;
 	
 	private double VelocityY;
 	private static final double INITVELOCITYY = 8.0;
@@ -287,6 +329,7 @@ public class Mazub {
 	     AccXBkw = 0.5;
 	     
 	}
+
 
 
 
