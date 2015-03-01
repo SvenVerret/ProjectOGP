@@ -40,68 +40,8 @@ public class Mazub {
 		}
 
 	}
-	
-	@Basic
-	public int getPosX() {
-		return this.PosX;
-	}
-	public void setPosX(int posx) throws OutOfBoundsException {
-		if (PosX > 1023){
-			throw new OutOfBoundsException(1023);
-		} else if (PosX < 0){
-			throw new OutOfBoundsException(0);
-		} else {
-			this.PosX = posx;
-		}	
-	}
-	
-	@Basic
-	public int getPosY() {
-		return this.PosY;
-	}
-	public void setPosY(int posy) throws OutOfBoundsException {
-		if (posy > 1023){
-			throw new OutOfBoundsException(1023);
-		} else if (posy < 0){
-			throw new OutOfBoundsException(0);
-		} else {
-			this.PosY = posy;
-		}
-	}
-	
-	@Basic
-	public int getHeight() {
-		return Height;
-	}
-	public void setHeight(int height) {
-		this.Height= height;
-	}
-	
-	@Basic
-	public int getWidth() {
-		return Width;
-	}
-	public void setWidth(int width) {
-		this.Width= width;
-	}
-	@Basic @Immutable
-	public int getStandingHeight() {
-		return StandingHeight;
-	}
 
-	
-	private int PosX;
-	private int PosY;
-	private int Height;
-	private int Width;
-	private final int StandingHeight;
-	
-	public boolean isValidPosX(int posx){
-		return ((posx >=0) && (posx <= 1023));
-	}
-	public boolean isValidPosY(int posy){
-		return ((posy >=0) && (posy <= 767));
-	}
+	// Methods
 	
 	public void startMove(boolean direction){
 		if (direction == true){
@@ -129,7 +69,6 @@ public class Mazub {
 			}	
 		}	
 	}
-	
 	public void endMove(){
 		this.setVelocityX(0.0);
 	}
@@ -137,7 +76,6 @@ public class Mazub {
 	public void startJump(){
 		this.setVelocityY(INITVELOCITYY);
 	}
-	
 	public void endJump(){
 		if (this.getVelocityY() > 0.0){
 			this.setVelocityY(0.0);
@@ -156,19 +94,16 @@ public class Mazub {
 		}
 	}
 	
-	
 	//TODO defensive?
 	public void startDuck(){
 		this.setHeight(this.getStandingHeight()/2);
 		this.setMaxVelocityXCurr(1.0);
 	}
-	
 	public void endDuck(){
 		this.setHeight(this.getStandingHeight());
 		this.setMaxVelocityXCurr(getMaxVelocityX());
 	}
 
-	
 	public void advanceTime(){
 
 		boolean direction = this.getOrientation();
@@ -234,9 +169,63 @@ public class Mazub {
 	}
 
 	
+	// Getters & setters
+
+	@Basic
+	public int getPosX() {
+		return this.PosX;
+	}
+	public void setPosX(int posx) throws OutOfBoundsException {
+		if (PosX > 1023){
+			throw new OutOfBoundsException(1023);
+		} else if (PosX < 0){
+			throw new OutOfBoundsException(0);
+		} else {
+			this.PosX = posx;
+		}	
+	}
 	
+	@Basic
+	public int getPosY() {
+		return this.PosY;
+	}
+	public void setPosY(int posy) throws OutOfBoundsException {
+		if (posy > 1023){
+			throw new OutOfBoundsException(1023);
+		} else if (posy < 0){
+			throw new OutOfBoundsException(0);
+		} else {
+			this.PosY = posy;
+		}
+	}
 	
+	public boolean isValidPosX(int posx){
+		return ((posx >=0) && (posx <= 1023));
+	}
+	public boolean isValidPosY(int posy){
+		return ((posy >=0) && (posy <= 767));
+	}
 	
+	@Basic
+	public int getHeight() {
+		return Height;
+	}
+	public void setHeight(int height) {
+		this.Height= height;
+	}
+	
+	@Basic
+	public int getWidth() {
+		return Width;
+	}
+	public void setWidth(int width) {
+		this.Width= width;
+	}
+	@Basic @Immutable
+	public int getStandingHeight() {
+		return StandingHeight;
+	}
+
 	@Basic
 	public boolean getOrientation() {
 		return Orientation;
@@ -302,7 +291,15 @@ public class Mazub {
 		AccYCurr = accYCurr;
 	}
 	
+	
+	// Variables
 
+	private int PosX;
+	private int PosY;
+	private int Height;
+	private int Width;
+	private final int StandingHeight;
+	
 	/**
 	 * Orientation = true: right
 	 * 				false: left
@@ -323,6 +320,22 @@ public class Mazub {
 	private double AccYCurr;
 	private static final double ACCY = -10.0;
 
+	////////////////////////////////////////////////////////
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public static void main(String args[]){
 	     AccXFwd = 1.0;
