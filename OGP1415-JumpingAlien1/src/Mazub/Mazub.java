@@ -3,6 +3,8 @@ import be.kuleuven.cs.som.annotate.*;
 
 public class Mazub {
 	
+	//test
+	
 	public Mazub(int posx, int posy, int height, int width, double maxvelx, double initvelx, double dt) throws OutOfBoundsException {
 		if (posx > 1023){
 			throw new OutOfBoundsException(1023);
