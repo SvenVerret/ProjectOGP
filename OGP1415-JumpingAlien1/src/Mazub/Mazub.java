@@ -47,31 +47,19 @@ public class Mazub {
 	public void startMove(boolean direction){
 		if (direction == true){
 			this.setVelocityX(this.getInitVelocityX());
+			this.setAccXCurr(this.getAccXFwd());
 
 		}
 		if (direction == false){
-			this.setVelocityX(-1*this.getInitVelocityX());}
-
-			
-		double dt= this.getDeltaT();
-		
-		while (Math.abs(this.getVelocityX()) < this.getMaxVelocityXCurr() ){
-			if (direction == true){
-				this.setVelocityX( this.getVelocityX() + this.getAccXFwd() * dt );
-			} else{
-				this.setVelocityX( this.getVelocityX() - this.getAccXBkw() * dt );
-			}
-			
-			try {
-				Thread.sleep((long) (dt * 1000));
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
+			this.setVelocityX(-1*this.getInitVelocityX());
+			this.setAccXCurr(this.getAccXBkw());
 		}	
 	}
+	
 	public void endMove(){
 		this.setVelocityX(0.0);
+		this.setAccXCurr(0.0);
+		
 	}
 	
 	public void startJump(){
@@ -114,14 +102,16 @@ public class Mazub {
 		int posy = this.getPosY();
 		double velx = this.getVelocityX();
 		double vely = this.getVelocityY();
+		// accx is in startMove geset op accfwd of op accbkw
+		double accx = this.getAccXCurr();
 		double accy = this.getAccYCurr();
 				
 		if (direction == true){
-			// accx is positive (m/s)
+
 			// velx is positive (m/s)
 			// s in cm (1 pixel = 1 cm)
 			
-			double accx = this.getAccXFwd();
+
 			int s= (int) (100*(velx * dt + 0.5*accx*Math.pow(dt,2)));
 			if (isValidPosX(posx) && isValidPosX(posx + s))
 				this.setPosX( posx + s);
@@ -136,11 +126,11 @@ public class Mazub {
 			
 		} else{
 
-			// accx is positive (m/s)
+
 			// velx is negative (m/s)
 			// s in cm (1 pixel = 1 cm), making s negative (moving to the left)
 			
-			double accx = this.getAccXBkw();
+
 			int s= (int) (100*(velx * dt - 0.5*accx*Math.pow(dt,2)));
 			
 			if (isValidPosX(posx) && isValidPosX(posx + s))
@@ -273,7 +263,14 @@ public class Mazub {
 	public void setMaxVelocityXCurr(double maxVelocityXCurr) {
 		MaxVelocityXCurr = maxVelocityXCurr;
 	}
-
+	
+	@Basic
+	public double getAccXCurr() {
+		return AccXCurr;
+	}
+	public void setAccXCurr(double accXCurr) {
+		AccXCurr = accXCurr;
+	}
 
 	@Basic
 	public double getAccXFwd() {
@@ -316,6 +313,7 @@ public class Mazub {
 	private double VelocityY;
 	private static final double INITVELOCITYY = 8.0;
 	
+	private double AccXCurr;
 	private static double AccXFwd;
 	private static double AccXBkw;
 	private double AccYCurr;
@@ -343,6 +341,7 @@ public class Mazub {
 	     AccXBkw = 0.5;
 	     
 	}
+
 
 
 
